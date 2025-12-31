@@ -1,4 +1,6 @@
 # 好用软件收集器
+![alt text](image.png)
+
 
 ## 1. 产品概述
 ToolCollectionManager是一个基于.NET 10的WPF桌面应用程序，
