@@ -1,0 +1,75 @@
+<UserControl x:Class="ToolCollectionManager.Views.CategoryManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <TextBlock Text="分类管理" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,16"/>
+
+            <!-- Add New Category Section -->
+            <materialDesign:Card Padding="16" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="添加新分类" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,12"/>
+
+                    <TextBox Text="{Binding NewCategoryName}" 
+                         materialDesign:HintAssist.Hint="分类名称"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                    <TextBox Text="{Binding NewCategoryColor}" 
+                         materialDesign:HintAssist.Hint="颜色 (十六进制, 例如 #FF0000)"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,0,12"/>
+
+                    <Button Content="添加分类" 
+                        Command="{Binding AddCategoryCommand}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        HorizontalAlignment="Right"/>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <!-- Existing Categories List -->
+            <TextBlock Text="现有分类" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,8"/>
+
+            <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Categories}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card Margin="0,0,0,8" Padding="12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Color Indicator -->
+                                    <Border Grid.Column="0" Width="24" Height="24" CornerRadius="12" 
+                                        Background="{Binding Color}" Margin="0,0,12,0"/>
+
+                                    <!-- Category Name -->
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" 
+                                           VerticalAlignment="Center" FontWeight="Medium"/>
+
+                                    <!-- Delete Button -->
+                                    <Button Grid.Column="2" 
+                                        Command="{Binding DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource MaterialDesignIconButton}"
+                                        ToolTip="Delete Category">
+                                        <materialDesign:PackIcon Kind="Delete" Width="20" Height="20" Foreground="{DynamicResource MaterialDesignValidationErrorBrush}"/>
+                                    </Button>
+                                </Grid>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

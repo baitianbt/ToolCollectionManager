@@ -1,0 +1,50 @@
+<UserControl x:Class="ToolCollectionManager.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Views="clr-namespace:ToolCollectionManager.Views"
+             mc:Ignorable="d" 
+             Width="800" Height="550"
+             Background="{DynamicResource MaterialDesignPaper}">
+    
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="设置" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,16"/>
+
+        <TabControl Grid.Row="1" materialDesign:ColorZoneAssist.Mode="PrimaryLight" Style="{StaticResource MaterialDesignFilledTabControl}">
+            <!-- General Settings -->
+            <TabItem Header="常规">
+                <StackPanel Margin="16">
+                    <materialDesign:Card Padding="16" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="启动" Style="{StaticResource MaterialDesignSubtitle1TextBlock}" Margin="0,0,0,12"/>
+                            <StackPanel Orientation="Horizontal">
+                                <ToggleButton IsChecked="{Binding IsStartupEnabled}" />
+                                <TextBlock Text="开机自动运行" VerticalAlignment="Center" Margin="16,0,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Category Management -->
+            <TabItem Header="分类管理">
+                <Views:CategoryManagementView DataContext="{Binding CategoryManagement}"/>
+            </TabItem>
+
+            <!-- Add Software -->
+            <TabItem Header="添加软件">
+                 <!-- We reuse the Edit View but need to adjust context. 
+                      SoftwareEditView expects SoftwareEditViewModel. 
+                      Our AddSoftware property IS a SoftwareEditViewModel. -->
+                <Views:SoftwareEditView DataContext="{Binding AddSoftware}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>
